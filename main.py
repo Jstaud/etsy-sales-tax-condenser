@@ -1,6 +1,9 @@
 import os
 import csv
 import re
+import argparse
+import pandas as pd
+import os
 
 # Function to extract the order number from the Title or Info field
 def extract_order_number(row):
@@ -53,3 +56,33 @@ for input_file in input_files:
         writer.writeheader()
         for order in orders.values():
             writer.writerow(order)
+
+
+def combine_reports(output_dir):
+    # Get a list of all CSV files in the output directory, excluding 'combined.csv'
+    csv_files = [f for f in os.listdir(output_dir) if f.endswith('.csv') and f != 'combined.csv']
+
+    # Read each CSV file and append it to a list of DataFrames
+    dfs = [pd.read_csv(os.path.join(output_dir, f)) for f in csv_files]
+
+    # Filter out DataFrames that are empty or contain all NA values
+    dfs = [df for df in dfs if not df.empty and not df.isna().all().all()]
+
+    # Concatenate all DataFrames into a single DataFrame
+    combined_df = pd.concat(dfs, ignore_index=True)
+
+    # Write the combined DataFrame to a new CSV file
+    combined_df.to_csv(os.path.join(output_dir, 'combined.csv'), index=False)
+
+# Create a parser object
+parser = argparse.ArgumentParser()
+
+# Add the -c flag
+parser.add_argument('-c', action='store_true')
+
+# Parse the command-line arguments
+args = parser.parse_args()
+
+# If the -c flag is present, combine all monthly reports
+if args.c:
+    combine_reports(output_dir)

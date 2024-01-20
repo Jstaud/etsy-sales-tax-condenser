@@ -1,23 +1,19 @@
-# etsy-sales-tax-condenser
-A tool for extracting total sales tax paid and total sales elgible for sales taxes from Etsy monthly exports.
-# Order Data Processing Script
+# Etsy Sales Tax Condenser
 
-This Python script is designed to process CSV files containing order data. It extracts order numbers, amounts, taxes, and refund information from the input files and generates output files with specific headers. The script can handle multiple input files located in the "files" directory and outputs the results in the "outputs" directory. This is used primarily for reporting quarterly sales taxes.
+This script processes CSV files containing Etsy sales data, extracting order information and creating corresponding output files. It also supports combining all monthly reports into a single file when run with the `-c` flag.
 
-## Prerequisites
+## Dependencies
 
-Before using this script, ensure that you have the following prerequisites in place:
-
-- Python 3.x installed on your system.
-- The `csv` module, which is part of the Python standard library.
-- The `os` module, which is part of the Python standard library.
 - Regular expressions (Regex) support, provided by the `re` module.
+- `pandas` for data manipulation and analysis.
+- `argparse` for command-line option and argument parsing.
 
 ## Usage
 
 1. Place your input CSV files in the "files" directory.
 2. Run the script, and it will process all the CSV files found in the "files" directory.
 3. The script will create corresponding output files in the "outputs" directory.
+4. If you want to combine all the output files into a single file, run the script with the `-c` flag.
 
 ## How It Works
 
@@ -27,6 +23,7 @@ The script follows these main steps:
 2. For each input file, it reads and processes the data, extracting order information.
 3. The script identifies order numbers, their amounts, taxes, and refund information.
 4. It then creates output CSV files for each order with the desired headers in the "outputs" directory.
+5. If the `-c` flag is used, the script combines all the output files into a single file named `combined.csv`.
 
 ## Handling Missing or Invalid Data
 
@@ -34,8 +31,16 @@ The script handles cases where the "Amount" and "Fees & Taxes" columns contain "
 
 ## Example Usage
 
-Here is a sample command to run the script:
+Here are sample commands to run the script:
 
-```
-python3 main.py
-```
+- To process the CSV files and create individual output files:
+
+    ```
+    python3 main.py
+    ```
+
+- To process the CSV files and combine all the output files into a single file:
+
+    ```
+    python3 main.py -c
+    ```
