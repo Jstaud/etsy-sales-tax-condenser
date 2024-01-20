@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File Processor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.7.3/css/foundation.min.css">
+</head>
+<body>
+    <header>
+        <h1>File Processor</h1>
+    </header>
+    <main>
+        <form id="upload-form" action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="file">
+            <button type="submit" class="button">Upload</button>
+        </form>
+        <button id="download-button" class="button" disabled>Download Output File</button>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.7.3/js/foundation.min.js"></script>
+</body>
+</html>
