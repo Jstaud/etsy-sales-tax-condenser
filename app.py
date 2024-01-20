@@ -4,6 +4,10 @@ import os
 
 app = Flask(__name__)
 
+@app.route('/')
+def home():
+    return "Hello, World!"
+
 @app.route('/upload', methods=['POST'])
 def upload_file():
     """
@@ -21,14 +25,7 @@ def upload_file():
     file.save(temp_path)
     
     # Call your existing Python script, passing the path to the saved file
-    subprocess.run(["python3", "path_to_your_script.py", temp_path])
+    subprocess.run(["python3", "main.py", temp_path])
 
-    return 'File uploaded successfully'
-
-@app.route('/download')
-def download_file():
-    """
-    Handles file downloads.
-    Returns the output file for download from the 'outputs' directory.
-    """
-    return send_from_directory('outputs', 'output.csv')
+    # Return the output file for download
+    return send_from_directory('outputs', 'output.csv', as_attachment=True)
